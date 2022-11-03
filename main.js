@@ -1,7 +1,7 @@
-import "./style.css"
+import "./style.css";
 
 class Turtle {
-	constructor(ctx, x=0, y=0, angle=90*Math.PI/180, history=[]) {
+	constructor(ctx, x = 0, y = 0, angle = (90 * Math.PI) / 180, history = []) {
 		this.ctx = ctx;
 		this.x = x;
 		this.y = y;
@@ -25,7 +25,7 @@ class Turtle {
 	}
 
 	lt(angle) {
-		this.angle -= angle * Math.PI / 180
+		this.angle -= (angle * Math.PI) / 180;
 	}
 
 	rt(angle) {
@@ -53,7 +53,7 @@ const parseRules = (rules) => {
 		rulesDict[key] = value;
 	}
 	return rulesDict;
-}
+};
 
 const expandSystem = (axiom, rules, iterations) => {
 	let newAxiom = axiom;
@@ -62,18 +62,22 @@ const expandSystem = (axiom, rules, iterations) => {
 		for (let j of newAxiom) {
 			if (Object.keys(rules).includes(j)) {
 				tmpAxiom += rules[j];
-			}
-			else {
+			} else {
 				tmpAxiom += j;
 			}
 		}
 		newAxiom = tmpAxiom;
 	}
 	return newAxiom;
-}
+};
 
 const drawSystem = (string, angle, size, ctx) => {
-	ctx.clearRect(-(ctx.canvas.width / 2), (ctx.canvas.height / 2), ctx.canvas.width, -(ctx.canvas.height));
+	ctx.clearRect(
+		-(ctx.canvas.width / 2),
+		ctx.canvas.height / 2,
+		ctx.canvas.width,
+		-ctx.canvas.height
+	);
 	const turtle = new Turtle(ctx);
 	for (let i of string) {
 		switch (i) {
@@ -103,7 +107,7 @@ const drawSystem = (string, angle, size, ctx) => {
 			}
 		}
 	}
-}
+};
 
 document.addEventListener("DOMContentLoaded", () => {
 	const axiom = document.getElementById("axiom");
@@ -121,5 +125,15 @@ document.addEventListener("DOMContentLoaded", () => {
 	ctx.scale(1, -1);
 	document.body.prepend(canvas);
 
-	draw.onclick = () => drawSystem(expandSystem(axiom.value, parseRules(rules.value), iterations.valueAsNumber), angle.valueAsNumber, size.valueAsNumber, ctx);
-})
+	draw.onclick = () =>
+		drawSystem(
+			expandSystem(
+				axiom.value,
+				parseRules(rules.value),
+				iterations.valueAsNumber
+			),
+			angle.valueAsNumber,
+			size.valueAsNumber,
+			ctx
+		);
+});
